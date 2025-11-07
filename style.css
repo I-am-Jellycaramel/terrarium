@@ -24,17 +24,13 @@ body {
     padding: 10px
 }
 
-.plant-holder {
-    position: relative;
-    height: 13%;
-    left: -10px
-}
-
 .plant {
-    position: absolute;
-    max-width: 150%;
-    max-height: 150%;
-    z-index: 2;
+  position: absolute;
+  max-width: 100px;
+  max-height: 100px;
+  z-index: 999;
+  opacity: 1;
+  cursor: grab;
 }
 
 #terrarium {
@@ -46,12 +42,11 @@ body {
 .jar-walls {
     height: 80%;
     width: 60%;
-    background: #d1e1df;
+    background: rgba(209, 225, 223, 0.5);;
     border-radius: 10%;
     position: absolute;
     bottom: 0.5%;
     left: 20%;
-    opacity: 0.5;
     z-index: 1;
 }
 .jar-top {
@@ -105,4 +100,27 @@ body {
     position: absolute;
     top: 60%;
     left: 10%;
+}
+
+#header {
+  display: flex;
+  justify-content: center; /* 가운데 정렬 유지 */
+  align-items: center;
+  gap: 10px; /* h1과 버튼 사이 간격 */
+  margin-bottom: 10px;
+}
+
+#regen-btn {
+  padding: 8px 16px;
+  font-size: 15px;
+  background-color: #6ab04c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#regen-btn:hover {
+  background-color: #78c850;
 }

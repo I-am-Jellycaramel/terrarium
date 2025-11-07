@@ -1,45 +1,45 @@
-let maxZIndex = 14
+const mainSpaceElement = document.getElementById("main-space");
 
-for (let i = 1; i < 15; i++) {
-    dragElement(document.getElementById(`plant${i}`));
+function reset() {
+    for (let i = 1; i < 15; i++) {
+        let plant = document.getElementById(`plant${i}`);
+        setRandomLoc(plant);
+    }
+}
+function setRandomLoc(plant) {
+    const clWidth = mainSpaceElement.clientWidth- 30;
+    const clHeight = mainSpaceElement.clientHeight - 30;
+    const randomX = Math.random() * (clWidth - plant.offsetWidth);
+    const randomY = Math.random() * (clHeight - plant.offsetHeight);
+
+    // mainSpace 기준 상대 위치로 설정
+    plant.style.left = `${randomX}px`; // 가로
+    plant.style.top = `${randomY}px`;  // 세로
+}
+function dragstartHandler(ev) {
+  // Add different types of drag data
+  
 }
 
-function dragElement(terrariumElement) {
-    // 식물일 때만
-    if (!terrariumElement.classList.contains('plant')) return;
+function setDragEvents(el) {
+    el.addEventListener("dragstart", (ev) => {
+        ev.dataTransfer.setData("text/plain", ev.target.src);
+    });
+    el.addEventListener("dragover", (ev) => {
+        ev.preventDefault();
+    });
+    el.addEventListener("drop", (ev) => {
+        ev.preventDefault();
+        const data = ev.dataTransfer.getData("text/plain");
+        ev.target.append(data);
+    });
+}
 
-    let pos1=0, pos2=0, pos3=0, pos4=0;
-    
-    terrariumElement.onpointerdown = pointerDrag;
-    function pointerDrag(e) {
-        e.preventDefault(); // 이벤트의 기본 동작 막기
-        // console.log(e); // PointerEvent 정보 확인
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        // 아래 속성 각각은 이벤트 핸들러이고, 그 뒤는 함수 참조임.
-        document.onpointermove = elementDrag;
-        document.ondblclick = pullUp;
-        document.onpointerup = stopElementDrag;
-    }
-    function elementDrag(e) {
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        // console.log(pos1, pos2, pos3, pos4);
-        // 오브젝트를 실제로 이동시키는 부분. css 로 이동시켜야 해서 css 값 바꾸어서 이동시킴.
-        terrariumElement.style.top = terrariumElement.offsetTop - pos2 + 'px';
-        terrariumElement.style.left = terrariumElement.offsetLeft - pos1 + 'px';
-    }
-    function stopElementDrag() {
-        document.onpointerup = null;
-        document.onpointermove = null;
-        // 여기서 제일 위로 올리는 것까지
-        maxZIndex++;
-        terrariumElement.style.zIndex = maxZIndex;
-    }
-    function pullUp() {
-        maxZIndex++;
-        terrariumElement.style.zIndex = maxZIndex;
-    }
+document.getElementById("regen-btn").addEventListener("click", reset);
+
+for (let i = 1; i < 15; i++) {
+    let plant = document.getElementById(`plant${i}`);
+    plant.setAttribute("draggable", "true");
+    setRandomLoc(plant);
+    setDragEvents(el);
 }
