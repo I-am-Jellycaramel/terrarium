@@ -5,8 +5,8 @@ for (let i = 1; i < 15; i++) {
 }
 
 function dragElement(terrariumElement) {
-    // 이미지일 때만
-    if (terrariumElement.tagName !== 'IMG') return;
+    // 식물일 때만
+    if (!terrariumElement.classList.contains('plant')) return;
 
     let pos1=0, pos2=0, pos3=0, pos4=0;
     
